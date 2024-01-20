@@ -2,7 +2,7 @@ name: Sync Fork
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # This will run the workflow daily at midnight
+    - cron: '0 2 * * *'  # This will run the workflow daily at midnight
     # 
   # workflow_dispatch: # Allows manual workflow run (must in default branch to work)
 
