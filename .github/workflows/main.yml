@@ -1,20 +1,22 @@
 name: Sync Fork
 
-# This runs every day on 1801 UTC
 on:
   schedule:
-    - cron: '0 14 * * 1'
-  # Allows manual workflow run (must in default branch to work)
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # This will run the workflow daily at midnight
+    # 
+  # workflow_dispatch: # Allows manual workflow run (must in default branch to work)
 
 jobs:
-  build:
+  sync:
     runs-on: ubuntu-latest
     steps:
-      - name: GitHub Sync to Upstream Repository
-        uses: dabreadman/sync-upstream-repo@v1.3.0
-        with: 
-          upstream_repo: https://github.com/matthewdevaney/pa-desktop-blogs
-          upstream_branch: main
-          downstream_branch: main
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Sync fork
+      uses: aormsby/Fork-Sync-With-Upstream-action@v2.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        upstream_repository: matthewdevaney/pa-desktop-blogs  # Replace with the original repo's username and name
+        target_branch: main  # Replace with the branch you want to sync
+
